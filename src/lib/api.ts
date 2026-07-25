@@ -18,20 +18,26 @@ async function post<T>(path: string, body: FormData | Record<string, unknown>): 
   const isForm = body instanceof FormData
   const res = await fetch(`${BASE}${path}`, {
     method: 'POST',
-    headers: isForm
-      ? authHeaders()
-      : authHeaders({ 'Content-Type': 'application/json' }),
+    headers: isForm ? undefined : { 'Content-Type': 'application/json' },
     body: isForm ? body : JSON.stringify(body),
   })
+  if (res.status === 401) {
+    window.location.href = '/auth/login'
+    throw new Error('Unauthenticated')
+  }
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: 'Unknown error' }))
-    throw new Error(err.error ?? err.detail ?? `HTTP ${res.status}`)
+    throw new Error(err.error ?? `HTTP ${res.status}`)
   }
   return res.json()
 }
 
 async function get<T>(path: string): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, { headers: authHeaders() })
+  const res = await fetch(`${BASE}${path}`)
+  if (res.status === 401) {
+    window.location.href = '/auth/login'
+    throw new Error('Unauthenticated')
+  }
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
   return res.json()
 }

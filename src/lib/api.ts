@@ -18,7 +18,7 @@ async function post<T>(path: string, body: FormData | Record<string, unknown>): 
   const isForm = body instanceof FormData
   const res = await fetch(`${BASE}${path}`, {
     method: 'POST',
-    headers: isForm ? undefined : { 'Content-Type': 'application/json' },
+    headers: authHeaders(isForm ? undefined : { 'Content-Type': 'application/json' }),
     body: isForm ? body : JSON.stringify(body),
   })
   if (res.status === 401) {
@@ -33,7 +33,9 @@ async function post<T>(path: string, body: FormData | Record<string, unknown>): 
 }
 
 async function get<T>(path: string): Promise<T> {
-  const res = await fetch(`${BASE}${path}`)
+  const res = await fetch(`${BASE}${path}`, {
+    headers: authHeaders(),
+  })
   if (res.status === 401) {
     window.location.href = '/auth/login'
     throw new Error('Unauthenticated')

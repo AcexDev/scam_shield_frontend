@@ -1,15 +1,17 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/lib/auth'
 import { Shield } from '@/components/ui/Shield'
 import { Mail, Lock, Key, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 
-export default function ResetConfirmPage() {
+function ResetConfirmForm() {
   const { confirmPasswordReset } = useAuth()
   const router = useRouter()
+  const params = useSearchParams()
+
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
   const [token, setToken] = useState('')
@@ -19,6 +21,16 @@ export default function ResetConfirmPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [done, setDone] = useState(false)
+
+  // Pre-fill email and token from URL query params
+  useEffect(() => {
+    const emailParam = params.get('email')
+    const tokenParam = params.get('token')
+    const otpParam = params.get('otp')
+    if (emailParam) setEmail(emailParam)
+    if (tokenParam) setToken(tokenParam)
+    if (otpParam) setOtp(otpParam)
+  }, [params])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -66,16 +78,18 @@ export default function ResetConfirmPage() {
                     placeholder="Your email address" required className="input-field pl-10" />
                 </div>
 
-                <div className="relative">
-                  <Key size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none" />
-                  <input type="text" value={otp} onChange={e => setOtp(e.target.value)}
-                    placeholder="OTP from email" required className="input-field pl-10 font-mono tracking-widest" />
-                </div>
+                {!token && (
+                  <div className="relative">
+                    <Key size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none" />
+                    <input type="text" value={otp} onChange={e => setOtp(e.target.value)}
+                      placeholder="OTP from email" required className="input-field pl-10 font-mono tracking-widest" />
+                  </div>
+                )}
 
                 <div className="relative">
                   <Key size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none" />
-                  <input type="text" value={token} onChange={e => setToken(e.target.value)}
-                    placeholder="Reset token (if provided)" className="input-field pl-10 font-mono text-xs" />
+                  {/* Token is pre-filled from URL, hidden from user */}
+                  <input type="hidden" value={token} readOnly />
                 </div>
 
                 <div className="relative">
@@ -116,5 +130,13 @@ export default function ResetConfirmPage() {
         </Link>
       </div>
     </motion.div>
+  )
+}
+
+export default function ResetConfirmPage() {
+  return (
+    <Suspense fallback={<div className="w-full max-w-md flex justify-center pt-20"><Shield size={64} pulse /></div>}>
+      <ResetConfirmForm />
+    </Suspense>
   )
 }

@@ -129,7 +129,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-xs opacity-40 mt-6">
           Already have an account?{' '}
-          <Link href="/auth/login" className="hover:opacity-70 transition-opacity" style={{ color: '#00D4FF' }}>
+          <Link href="/login" className="hover:opacity-70 transition-opacity" style={{ color: '#00D4FF' }}>
             Sign in
           </Link>
         </p>

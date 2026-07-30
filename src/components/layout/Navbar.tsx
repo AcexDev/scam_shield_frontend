@@ -25,7 +25,7 @@ export function Navbar() {
 
   async function handleLogout() {
     await logout()
-    router.push('/auth/login')
+    router.push('/login')
   }
 
   return (
@@ -59,7 +59,7 @@ export function Navbar() {
                 </button>
               </div>
             ) : (
-              <Link href="/auth/login"
+              <Link href="/login"
                 className="px-3 py-1.5 rounded-xl text-xs font-semibold border border-[#00D4FF]/30 text-[#00D4FF] hover:bg-[#00D4FF]/10 transition-all"
                 style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
                 Sign In

@@ -40,7 +40,7 @@ function ResetConfirmForm() {
     try {
       await confirmPasswordReset(email, otp, token, newPassword, newPassword2)
       setDone(true)
-      setTimeout(() => router.push('/auth/login'), 2500)
+      setTimeout(() => router.push('/login'), 2500)
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Reset failed')
     } finally {
@@ -75,27 +75,24 @@ function ResetConfirmForm() {
                 <div className="relative">
                   <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none" />
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                    placeholder="Your email address" required className="input-field pl-10" />
+                    placeholder="Your email address" required className="input-field !pl-10" />
                 </div>
 
                 {!token && (
                   <div className="relative">
                     <Key size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none" />
                     <input type="text" value={otp} onChange={e => setOtp(e.target.value)}
-                      placeholder="OTP from email" required className="input-field pl-10 font-mono tracking-widest" />
+                      placeholder="OTP from email" required className="input-field !pl-10 font-mono tracking-widest" />
                   </div>
                 )}
 
-                <div className="relative">
-                  <Key size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none" />
-                  {/* Token is pre-filled from URL, hidden from user */}
+                 {/* Token is pre-filled from URL, hidden from user */}
                   <input type="hidden" value={token} readOnly />
-                </div>
 
                 <div className="relative">
                   <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none" />
                   <input type={showPw ? 'text' : 'password'} value={newPassword} onChange={e => setNewPassword(e.target.value)}
-                    placeholder="New password" required minLength={8} className="input-field pl-10 pr-10" />
+                    placeholder="New password" required minLength={8} className="input-field !pl-10 !pr-10" />
                   <button type="button" onClick={() => setShowPw(v => !v)}
                     className="absolute right-3.5 top-1/2 -translate-y-1/2 opacity-30 hover:opacity-60 transition-opacity">
                     {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
@@ -105,7 +102,7 @@ function ResetConfirmForm() {
                 <div className="relative">
                   <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none" />
                   <input type={showPw ? 'text' : 'password'} value={newPassword2} onChange={e => setNewPassword2(e.target.value)}
-                    placeholder="Confirm new password" required className="input-field pl-10"
+                    placeholder="Confirm new password" required className="input-field !pl-10"
                     style={{ borderColor: newPassword2 && newPassword !== newPassword2 ? 'rgba(239,68,68,0.5)' : undefined }} />
                 </div>
 
@@ -125,7 +122,7 @@ function ResetConfirmForm() {
           )}
         </AnimatePresence>
 
-        <Link href="/auth/login" className="flex items-center justify-center gap-1.5 mt-6 text-xs opacity-40 hover:opacity-70 transition-opacity">
+        <Link href="/login" className="flex items-center justify-center gap-1.5 mt-6 text-xs opacity-40 hover:opacity-70 transition-opacity">
           ← Back to sign in
         </Link>
       </div>

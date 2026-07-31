@@ -12,7 +12,7 @@ body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: anti
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.25); border-radius: 3px; }
 
-.glass { background: rgba(15,22,40,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.07); }
+.glass { background: rgba(15,22,40,0.7); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.07); }
 .light .glass { background: rgba(255,255,255,0.75); border-color: rgba(0,0,0,0.07); }
 
 .grad-text { background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }

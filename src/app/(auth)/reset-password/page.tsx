@@ -10,7 +10,7 @@ function Handler() {
   useEffect(() => {
     const email = params.get('email')
     const token = params.get('token')
-    router.replace(`/auth/reset-confirm?email=${email}&token=${token}`)
+    router.replace(`/reset-confirm?email=${email}&token=${token}`)
   }, [params, router])
 
   return null

@@ -46,7 +46,7 @@ export default function ResetPage() {
               <p className="text-sm opacity-50 mb-6">
                 We sent a reset link to <strong className="opacity-80">{email}</strong>. Check your inbox and follow the instructions.
               </p>
-              <Link href="/auth/reset-confirm"
+              <Link href="/reset-confirm"
                 className="btn-primary inline-block text-center text-white no-underline py-3 px-6 rounded-2xl text-sm font-semibold"
                 style={{ background: 'linear-gradient(135deg, #00D4FF, #7C3AED)', fontFamily: 'Space Grotesk, sans-serif' }}>
                 Enter OTP & New Password
@@ -62,7 +62,7 @@ export default function ResetPage() {
                   <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-30 pointer-events-none" />
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)}
                     placeholder="you@example.com" required autoComplete="email"
-                    className="input-field pl-10" />
+                    className="input-field !pl-10" />
                 </div>
 
                 {error && (
@@ -81,7 +81,7 @@ export default function ResetPage() {
           )}
         </AnimatePresence>
 
-        <Link href="/auth/login" className="flex items-center justify-center gap-1.5 mt-6 text-xs opacity-40 hover:opacity-70 transition-opacity">
+        <Link href="/login" className="flex items-center justify-center gap-1.5 mt-6 text-xs opacity-40 hover:opacity-70 transition-opacity">
           <ArrowLeft size={12} /> Back to sign in
         </Link>
       </div>

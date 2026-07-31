@@ -22,7 +22,7 @@ async function post<T>(path: string, body: FormData | Record<string, unknown>): 
     body: isForm ? body : JSON.stringify(body),
   })
   if (res.status === 401) {
-    window.location.href = '/auth/login'
+    window.location.href = '/login'
     throw new Error('Unauthenticated')
   }
   if (!res.ok) {
@@ -37,7 +37,7 @@ async function get<T>(path: string): Promise<T> {
     headers: authHeaders(),
   })
   if (res.status === 401) {
-    window.location.href = '/auth/login'
+    window.location.href = '/login'
     throw new Error('Unauthenticated')
   }
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
